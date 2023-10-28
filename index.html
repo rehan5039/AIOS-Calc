@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIOS Calc</title>
+  
+  <style>
+    /* Add CSS styles for the button */
+    a.button-container {
+      position: fixed;
+      top: 10px; /* Adjust the top position as needed */
+      right: 10px; /* Adjust the right position as needed */
+    }
+
+    a.button-container button {
+      font-size: 16px; /* Adjust the font size as needed */
+      padding: 5px 10px; /* Adjust the padding as needed */
+    }
+
+    .calc-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      width: 80px;
+      height: 80px;
+      font-size: 30px;
+    }
+
+    .zero {
+      width: 160px;
+    }
+
+    .value {
+      background: #f69907;
+    }
+
+    .value:hover {
+      background: #f69a07c4;
+    }
+
+    .value-top {
+      background: #a0a0a0;
+      color: #313131;
+    }
+
+    .value-top:hover {
+      background: #a0a0a0c4;
+    }
+
+    button:hover {
+      background: #313131c4;
+    }
+
+    .output-value-text {
+      font-size: 48px;
+    }
+  </style>
+</head>
+
+<body style="height: 100vh; overflow: hidden;">
+  <section style="width: 100%; height: 100%;">
+    <h6>Code by Rehan</h6>
+    <div class="calc-container">
+      <div class="row">
+        <input class="output-value" type="text" style="display: none;" />
+        <span class="output-value-text">0</span>
+      </div>
+      <div class="row">
+        <button class="value-top btn" data-value="AC">AC</button>
+        <button class="value-top btn" data-value="negate">+/-</button>
+        <button class="value-top btn" data-value="percent">%</button>
+        <button class="value btn" data-value="÷">÷</button>
+      </div>
+      <div class="row">
+        <button class="btn" data-value="7">7</button>
+        <button class="btn" data-value="8">8</button>
+        <button class="btn" data-value="9">9</button>
+        <button class="value btn" data-value="×">×</button>
+      </div>
+      <div class="row">
+        <button class="btn" data-value="4">4</button>
+        <button class="btn" data-value="5">5</button>
+        <button class="btn" data-value="6">6</button>
+        <button class="value btn" data-value="-">-</button>
+      </div>
+      <div class="row">
+        <button class="btn" data-value="3">3</button>
+        <button class="btn" data-value="2">2</button>
+        <button class="btn" data-value="1">1</button>
+        <button class="value btn" data-value="+">+</button>
+      </div>
+      <div class="row">
+        <button class="zero btn" data-value="0">0</button>
+        <button class="btn" data-value=".">.</button>
+        <button class="value btn" data-value="=">=</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add the button within a container -->
+  <a href="2cal.html" class="button-container">
+    <button>Black</button>
+  </a>
+
+  <script>
+    let string = "";
+    let buttons = document.querySelectorAll('button');
+    let arr = Array.from(buttons);
+    let outputValue = document.querySelector('.output-value-text');
+
+    arr.forEach(button => {
+      button.addEventListener('click', (e) => {
+        if (e.target.dataset.value === '=') {
+          try {
+            string = eval(string);
+            outputValue.textContent = string;
+          } catch (error) {
+            outputValue.textContent = 'Error';
+          }
+        } else if (e.target.dataset.value === 'AC') {
+          string = '';
+          outputValue.textContent = '0';
+        } else if (e.target.dataset.value === 'negate') {
+          if (string.startsWith('-')) {
+            string = string.slice(1);
+          } else {
+            string = '-' + string;
+          }
+          outputValue.textContent = string;
+        } else if (e.target.dataset.value === 'percent') {
+          string = (parseFloat(string) / 100).toString();
+          outputValue.textContent = string;
+        } else {
+          string = string + e.target.dataset.value;
+          outputValue.textContent = string;
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>
